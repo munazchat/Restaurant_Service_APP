@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Personal Restaurant Guide</string>
+
+    <string-array name="restauranttypes"  >
+        <item>Fast Food</item>
+        <item>Fast Casual</item>
+        <item>Casual Dining</item>
+        <item>Cafe Hybrid</item>
+    </string-array>
 </resources>
