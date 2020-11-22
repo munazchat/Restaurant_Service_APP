@@ -66,9 +66,9 @@ public class RestaurantListActivity extends AppCompatActivity {
                 goToRestaurant(mRestaurants.get(position));
 
                 // TODO: remove this temporary code for deletion after prototypes
-                mDB.deleteRestaurant(mRestaurants.get(position));
-                mRestaurants.remove(position);
-                mAdapter.notifyDataSetChanged();
+//                mDB.deleteRestaurant(mRestaurants.get(position));
+//                mRestaurants.remove(position);
+//                mAdapter.notifyDataSetChanged();
             }
         });
     }
@@ -87,12 +87,11 @@ public class RestaurantListActivity extends AppCompatActivity {
         }
     }
 
-    //TODO: fix this when we know what target Activity is called
     private void goToRestaurant(Restaurant restaurant) {
-//        Intent intent = new Intent(RestaurantListActivity.this, RestaurantActivity.class);
-//        //TODO: parse the whole model in the future (requires Parcelable for model)
-//        intent.putExtra(RESTAURANT_KEY, restaurant.getId());
-//        startActivity(intent);
+        Intent intent = new Intent(RestaurantListActivity.this, RestaurantActivity.class);
+        //TODO: parse the whole model in the future (requires Parcelable for model)
+        intent.putExtra(RESTAURANT_KEY, restaurant.getId());
+        startActivity(intent);
     }
 
     private void addRows() {
