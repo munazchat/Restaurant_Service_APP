@@ -1,5 +1,6 @@
 package ca.gbc.comp3074.personalrestaurantguide.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -8,8 +9,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,12 +37,15 @@ public class RestaurantListActivity extends AppCompatActivity {
 
     private Restaurant mTopRestaurant;
 
+    BottomNavigationView bottomNavigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_list);
 
         init();
+        setUpBottomNav();
     }
 
     private void init() {
@@ -69,6 +76,34 @@ public class RestaurantListActivity extends AppCompatActivity {
 //                mDB.deleteRestaurant(mRestaurants.get(position));
 //                mRestaurants.remove(position);
 //                mAdapter.notifyDataSetChanged();
+            }
+        });
+
+    }
+
+    private void setUpBottomNav() {
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+
+        // Whenever an item in the bottom navigation is selected
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                Intent intent = null;
+                switch (menuItem.getItemId()) {
+                    case R.id.action_search:
+                        intent = new Intent(RestaurantListActivity.this, SearchActivity.class);
+                        break;
+                    case R.id.action_restaurants:
+                        break;
+                    case R.id.action_admin:
+                        intent = new Intent(RestaurantListActivity.this, AdminActivity.class);
+                        break;
+                }
+                if (intent != null) {
+                    startActivity(intent);
+                }
+                return true;
             }
         });
     }
@@ -155,5 +190,11 @@ public class RestaurantListActivity extends AppCompatActivity {
                             "Aburi Restaurant’s first East Coast location is situated in Toronto’s Harbour Front at Bay and Queen’s Quay. With over 7000 square feet, a raw bar, sushi bar, and large patio, Miku brings contemporary upscale design to the Southern Financial District.",
                             "Japanese", 4.6f));
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        bottomNavigationView.setSelectedItemId(R.id.action_restaurants);
     }
 }
