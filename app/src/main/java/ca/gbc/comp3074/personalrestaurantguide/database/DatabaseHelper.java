@@ -46,6 +46,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return id;
     }
 
+    public int updateRestaurant(Restaurant restaurant) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(Restaurant.COLUMN_ID, restaurant.getId());
+        values.put(Restaurant.COLUMN_NAME, restaurant.getName());
+        values.put(Restaurant.COLUMN_ADDRESS, restaurant.getAddress());
+        values.put(Restaurant.COLUMN_DESCRIPTION, restaurant.getDescription());
+        values.put(Restaurant.COLUMN_RATING, restaurant.getRating());
+        values.put(Restaurant.COLUMN_TYPE, restaurant.getType());
+
+        int count = db.update(Restaurant.TABLE_NAME, values, Restaurant.COLUMN_ID + "=?",
+                new String[]{String.valueOf(restaurant.getId())});
+
+        return count;
+    }
+
     public Restaurant getRestaurant(long id) {
         SQLiteDatabase db = getWritableDatabase();
 

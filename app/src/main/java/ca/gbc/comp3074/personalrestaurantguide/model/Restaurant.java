@@ -1,6 +1,9 @@
 package ca.gbc.comp3074.personalrestaurantguide.model;
 
-public class Restaurant implements Comparable<Restaurant>{
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Restaurant implements Comparable<Restaurant>, Parcelable {
 
     public static final String TABLE_NAME = "restaurants";
 
@@ -102,4 +105,41 @@ public class Restaurant implements Comparable<Restaurant>{
         }
         return 0;
     }
+
+    protected Restaurant(Parcel in) {
+        id = in.readInt();
+        name = in.readString();
+        address = in.readString();
+        description = in.readString();
+        type = in.readString();
+        rating = in.readFloat();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(name);
+        dest.writeString(address);
+        dest.writeString(description);
+        dest.writeString(type);
+        dest.writeFloat(rating);
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<Restaurant> CREATOR = new Parcelable.Creator<Restaurant>() {
+        @Override
+        public Restaurant createFromParcel(Parcel in) {
+            return new Restaurant(in);
+        }
+
+        @Override
+        public Restaurant[] newArray(int size) {
+            return new Restaurant[size];
+        }
+    };
 }

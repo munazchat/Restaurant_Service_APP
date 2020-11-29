@@ -1,10 +1,10 @@
 package ca.gbc.comp3074.personalrestaurantguide.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,13 +15,13 @@ import java.util.List;
 import ca.gbc.comp3074.personalrestaurantguide.R;
 import ca.gbc.comp3074.personalrestaurantguide.model.Restaurant;
 
-public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.MyViewHolder> {
+public class AdminRestaurantAdapter extends RecyclerView.Adapter<AdminRestaurantAdapter.MyViewHolder> {
 
     private Context context;
     private List<Restaurant> restaurants;
     private OnRestaurantClickListener listener;
 
-    public RestaurantAdapter(Context context, List<Restaurant> restaurants) {
+    public AdminRestaurantAdapter(Context context, List<Restaurant> restaurants) {
         this.context = context;
         this.restaurants = restaurants;
     }
@@ -30,7 +30,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.My
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View restaurantView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.restaurant_card, parent, false);
+                .inflate(R.layout.admin_restaurant_card, parent, false);
         return new MyViewHolder(restaurantView);
     }
 
@@ -48,17 +48,32 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.My
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         public TextView restaurantName;
+        public Button btn_edit;
+        public Button btn_delete;
+
 
         public MyViewHolder(View view) {
             super(view);
             restaurantName = view.findViewById(R.id.restaurant_name);
-            Log.d("MyViewHolder", "MyViewHolder: " + view.getId());
+            btn_edit = view.findViewById(R.id.btn_edit);
+            btn_delete = view.findViewById(R.id.btn_delete);
+
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    int position = getAdapterPosition();
-
-                    listener.onRestaurantClicked(position);
+                    listener.onRestaurantClicked(getAdapterPosition());
+                }
+            });
+            btn_edit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.onEditClicked(getAdapterPosition());
+                }
+            });
+            btn_delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listener.onDeleteClicked(getAdapterPosition());
                 }
             });
         }
@@ -66,6 +81,8 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.My
 
     public interface OnRestaurantClickListener {
         void onRestaurantClicked(int position);
+        void onEditClicked(int position);
+        void onDeleteClicked(int position);
     }
 
     public void setOnRestaurantClickListener(OnRestaurantClickListener l) {

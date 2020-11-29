@@ -18,6 +18,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import ca.gbc.comp3074.personalrestaurantguide.R;
 import ca.gbc.comp3074.personalrestaurantguide.adapter.RestaurantAdapter;
@@ -34,6 +35,8 @@ public class RestaurantListActivity extends AppCompatActivity {
     private List<Restaurant> mRestaurants = new ArrayList<>();
     private RecyclerView mRecyclerView;
     private DatabaseHelper mDB;
+    private boolean fromSearch;
+    private List<Restaurant> mResults = new ArrayList<>();
 
     private Restaurant mTopRestaurant;
 
@@ -44,19 +47,22 @@ public class RestaurantListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_list);
 
+        Log.d(TAG, "onCreate: " + getIntent().hasExtra("type"));
+
         init();
         setUpBottomNav();
     }
 
     private void init() {
+        fromSearch = getIntent().hasExtra("searchtext");
         mDB = new DatabaseHelper(this);
         addRows();
 
         mTopPickTextView = findViewById(R.id.top_pick_value);
         mRecyclerView = findViewById(R.id.recycler_view);
 
-        //TODO: Add check for data from intent to see if we came from search or not
         mRestaurants.addAll(mDB.getAllRestaurants());
+        //TODO: Add check for data from intent to see if we came from search or not
 
         mAdapter = new RestaurantAdapter(this, mRestaurants);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -149,52 +155,67 @@ public class RestaurantListActivity extends AppCompatActivity {
 
             mDB.insertRestaurant(
                     new Restaurant("Craque de Creme", "1360 Bathurst St, Toronto, ON M5R 3H7, Canada",
-                            "Dessert restaurant", "Dessert", 4.5f));
+                            "Dessert restaurant", "Fast Food", 4.5f));
             mDB.insertRestaurant(
                     new Restaurant("The Cheesecake Factory", "3401 Dufferin St, North York, ON M6A 2T9, Canada",
                             "The Cheesecake Factory story begins in Detroit, Michigan in the 1940’s. Evelyn Overton found a recipe in the local newspaper that would inspire her “Original” Cheesecake.",
-                            "A la carte", 4.0f));
+                            "Fast Casual", 4.0f));
             mDB.insertRestaurant(
                     new Restaurant("Ilden", "Algade 62, 4000 Roskilde, Denmark",
-                            "All you can eat buffet", "Buffet", 4.0f));
+                            "All you can eat buffet", "Casual Dining", 4.0f));
             mDB.insertRestaurant(
                     new Restaurant("Miku Toronto", "10 Bay St #105, Toronto, ON M5J 2R8, Canada",
                             "Aburi Restaurant’s first East Coast location is situated in Toronto’s Harbour Front at Bay and Queen’s Quay. With over 7000 square feet, a raw bar, sushi bar, and large patio, Miku brings contemporary upscale design to the Southern Financial District.",
-                            "Japanese", 4.6f));
+                            "Cafe Hybrid", 4.6f));
             mDB.insertRestaurant(
                     new Restaurant("Craque de Creme", "1360 Bathurst St, Toronto, ON M5R 3H7, Canada",
-                            "Dessert restaurant", "Dessert", 4.5f));
+                            "Dessert restaurant", "Fast Food", 4.5f));
             mDB.insertRestaurant(
                     new Restaurant("The Cheesecake Factory", "3401 Dufferin St, North York, ON M6A 2T9, Canada",
                             "The Cheesecake Factory story begins in Detroit, Michigan in the 1940’s. Evelyn Overton found a recipe in the local newspaper that would inspire her “Original” Cheesecake.",
-                            "A la carte", 4.0f));
+                            "Fast Casual", 4.0f));
             mDB.insertRestaurant(
                     new Restaurant("Ilden", "Algade 62, 4000 Roskilde, Denmark",
-                            "All you can eat buffet", "Buffet", 4.0f));
+                            "All you can eat buffet", "Casual Dining", 4.0f));
             mDB.insertRestaurant(
                     new Restaurant("Miku Toronto", "10 Bay St #105, Toronto, ON M5J 2R8, Canada",
                             "Aburi Restaurant’s first East Coast location is situated in Toronto’s Harbour Front at Bay and Queen’s Quay. With over 7000 square feet, a raw bar, sushi bar, and large patio, Miku brings contemporary upscale design to the Southern Financial District.",
-                            "Japanese", 4.6f));
+                            "Cafe Hybrid", 4.6f));
             mDB.insertRestaurant(
                     new Restaurant("Craque de Creme", "1360 Bathurst St, Toronto, ON M5R 3H7, Canada",
-                            "Dessert restaurant", "Dessert", 4.5f));
+                            "Dessert restaurant", "Fast Food", 4.5f));
             mDB.insertRestaurant(
                     new Restaurant("The Cheesecake Factory", "3401 Dufferin St, North York, ON M6A 2T9, Canada",
                             "The Cheesecake Factory story begins in Detroit, Michigan in the 1940’s. Evelyn Overton found a recipe in the local newspaper that would inspire her “Original” Cheesecake.",
-                            "A la carte", 4.0f));
+                            "Fast Casual", 4.0f));
             mDB.insertRestaurant(
                     new Restaurant("Ilden", "Algade 62, 4000 Roskilde, Denmark",
-                            "All you can eat buffet", "Buffet", 4.0f));
+                            "All you can eat buffet", "Casual Dining", 4.0f));
             mDB.insertRestaurant(
                     new Restaurant("Miku Toronto", "10 Bay St #105, Toronto, ON M5J 2R8, Canada",
                             "Aburi Restaurant’s first East Coast location is situated in Toronto’s Harbour Front at Bay and Queen’s Quay. With over 7000 square feet, a raw bar, sushi bar, and large patio, Miku brings contemporary upscale design to the Southern Financial District.",
-                            "Japanese", 4.6f));
+                            "Cafe Hybrid", 4.6f));
         }
     }
+
 
     @Override
     protected void onResume() {
         super.onResume();
         bottomNavigationView.setSelectedItemId(R.id.action_restaurants);
+        if (fromSearch) {
+            Intent intent = getIntent();
+            String searchText = intent.getStringExtra("searchtext");
+            String type = intent.getStringExtra("type");
+
+            for (Restaurant r : mRestaurants) {
+                if (r.getType().equals(type) && r.getName().contains(searchText)) {
+                    mResults.add(r);
+                }
+            }
+            mAdapter = new RestaurantAdapter(this, mResults);
+            mRecyclerView.setAdapter(mAdapter);
+        }
+
     }
 }
