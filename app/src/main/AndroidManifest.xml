@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.AddOrEditRestaurantActivity"
+        <activity android:name=".activity.AboutActivity"
+            android:parentActivityName=".activity.AdminActivity" />
+        <activity
+            android:name=".activity.AddOrEditRestaurantActivity"
             android:parentActivityName=".activity.AdminActivity" />
         <activity
             android:name=".activity.AdminActivity"

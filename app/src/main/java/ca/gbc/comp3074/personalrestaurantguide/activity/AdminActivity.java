@@ -89,7 +89,7 @@ public class AdminActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inf = getMenuInflater();
-        inf.inflate(R.menu.top_nav_menu, menu);
+        inf.inflate(R.menu.admin_top_nav_menu, menu);
 
         return true;
     }

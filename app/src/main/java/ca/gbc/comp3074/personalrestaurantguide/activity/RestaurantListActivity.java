@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -18,7 +20,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import ca.gbc.comp3074.personalrestaurantguide.R;
 import ca.gbc.comp3074.personalrestaurantguide.adapter.RestaurantAdapter;
@@ -105,6 +106,9 @@ public class RestaurantListActivity extends AppCompatActivity {
                     case R.id.action_admin:
                         intent = new Intent(RestaurantListActivity.this, AdminActivity.class);
                         break;
+//                    case R.id.action_about:
+//                        intent = new Intent(RestaurantListActivity.this, AboutActivity.class);
+//                        break;
                 }
                 if (intent != null) {
                     startActivity(intent);
@@ -112,6 +116,25 @@ public class RestaurantListActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inf = getMenuInflater();
+        inf.inflate(R.menu.restaurant_list_top_nav_menu, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_about:
+                Intent intent = new Intent(RestaurantListActivity.this, AboutActivity.class);
+                startActivity(intent);
+                break;
+            default: return super.onOptionsItemSelected(item);
+        }
+        return true;
     }
 
     private Restaurant getTopPick() {
@@ -143,54 +166,54 @@ public class RestaurantListActivity extends AppCompatActivity {
             mDB.insertRestaurant(
                     new Restaurant("The Cheesecake Factory", "3401 Dufferin St, North York, ON M6A 2T9, Canada",
                             "The Cheesecake Factory story begins in Detroit, Michigan in the 1940’s. Evelyn Overton found a recipe in the local newspaper that would inspire her “Original” Cheesecake.",
-                            "Fast Casual", 4.0f));
+                            "Fast Food", 4.0f));
             mDB.insertRestaurant(
                     new Restaurant("Ilden", "Algade 62, 4000 Roskilde, Denmark",
-                            "All you can eat buffet", "Casual Dining", 4.0f));
+                            "All you can eat buffet", "Fast Food", 4.0f));
             mDB.insertRestaurant(
                     new Restaurant("Miku Toronto", "10 Bay St #105, Toronto, ON M5J 2R8, Canada",
                             "Aburi Restaurant’s first East Coast location is situated in Toronto’s Harbour Front at Bay and Queen’s Quay. With over 7000 square feet, a raw bar, sushi bar, and large patio, Miku brings contemporary upscale design to the Southern Financial District.",
-                            "Cafe Hybrid", 4.6f));
+                            "Fast Food", 4.6f));
 
 
             mDB.insertRestaurant(
                     new Restaurant("Craque de Creme", "1360 Bathurst St, Toronto, ON M5R 3H7, Canada",
-                            "Dessert restaurant", "Fast Food", 4.5f));
+                            "Dessert restaurant", "Fast Casual", 4.5f));
             mDB.insertRestaurant(
                     new Restaurant("The Cheesecake Factory", "3401 Dufferin St, North York, ON M6A 2T9, Canada",
                             "The Cheesecake Factory story begins in Detroit, Michigan in the 1940’s. Evelyn Overton found a recipe in the local newspaper that would inspire her “Original” Cheesecake.",
                             "Fast Casual", 4.0f));
+            mDB.insertRestaurant(
+                    new Restaurant("Ilden", "Algade 62, 4000 Roskilde, Denmark",
+                            "All you can eat buffet", "Fast Casual", 4.0f));
+            mDB.insertRestaurant(
+                    new Restaurant("Miku Toronto", "10 Bay St #105, Toronto, ON M5J 2R8, Canada",
+                            "Aburi Restaurant’s first East Coast location is situated in Toronto’s Harbour Front at Bay and Queen’s Quay. With over 7000 square feet, a raw bar, sushi bar, and large patio, Miku brings contemporary upscale design to the Southern Financial District.",
+                            "Fast Casual", 4.6f));
+            mDB.insertRestaurant(
+                    new Restaurant("Craque de Creme", "1360 Bathurst St, Toronto, ON M5R 3H7, Canada",
+                            "Dessert restaurant", "Casual Dining", 4.5f));
+            mDB.insertRestaurant(
+                    new Restaurant("The Cheesecake Factory", "3401 Dufferin St, North York, ON M6A 2T9, Canada",
+                            "The Cheesecake Factory story begins in Detroit, Michigan in the 1940’s. Evelyn Overton found a recipe in the local newspaper that would inspire her “Original” Cheesecake.",
+                            "Casual Dining", 4.0f));
             mDB.insertRestaurant(
                     new Restaurant("Ilden", "Algade 62, 4000 Roskilde, Denmark",
                             "All you can eat buffet", "Casual Dining", 4.0f));
             mDB.insertRestaurant(
                     new Restaurant("Miku Toronto", "10 Bay St #105, Toronto, ON M5J 2R8, Canada",
                             "Aburi Restaurant’s first East Coast location is situated in Toronto’s Harbour Front at Bay and Queen’s Quay. With over 7000 square feet, a raw bar, sushi bar, and large patio, Miku brings contemporary upscale design to the Southern Financial District.",
-                            "Cafe Hybrid", 4.6f));
+                            "Casual Dining", 4.6f));
             mDB.insertRestaurant(
                     new Restaurant("Craque de Creme", "1360 Bathurst St, Toronto, ON M5R 3H7, Canada",
-                            "Dessert restaurant", "Fast Food", 4.5f));
+                            "Dessert restaurant", "Cafe Hybrid", 4.5f));
             mDB.insertRestaurant(
                     new Restaurant("The Cheesecake Factory", "3401 Dufferin St, North York, ON M6A 2T9, Canada",
                             "The Cheesecake Factory story begins in Detroit, Michigan in the 1940’s. Evelyn Overton found a recipe in the local newspaper that would inspire her “Original” Cheesecake.",
-                            "Fast Casual", 4.0f));
+                            "Cafe Hybrid", 4.0f));
             mDB.insertRestaurant(
                     new Restaurant("Ilden", "Algade 62, 4000 Roskilde, Denmark",
-                            "All you can eat buffet", "Casual Dining", 4.0f));
-            mDB.insertRestaurant(
-                    new Restaurant("Miku Toronto", "10 Bay St #105, Toronto, ON M5J 2R8, Canada",
-                            "Aburi Restaurant’s first East Coast location is situated in Toronto’s Harbour Front at Bay and Queen’s Quay. With over 7000 square feet, a raw bar, sushi bar, and large patio, Miku brings contemporary upscale design to the Southern Financial District.",
-                            "Cafe Hybrid", 4.6f));
-            mDB.insertRestaurant(
-                    new Restaurant("Craque de Creme", "1360 Bathurst St, Toronto, ON M5R 3H7, Canada",
-                            "Dessert restaurant", "Fast Food", 4.5f));
-            mDB.insertRestaurant(
-                    new Restaurant("The Cheesecake Factory", "3401 Dufferin St, North York, ON M6A 2T9, Canada",
-                            "The Cheesecake Factory story begins in Detroit, Michigan in the 1940’s. Evelyn Overton found a recipe in the local newspaper that would inspire her “Original” Cheesecake.",
-                            "Fast Casual", 4.0f));
-            mDB.insertRestaurant(
-                    new Restaurant("Ilden", "Algade 62, 4000 Roskilde, Denmark",
-                            "All you can eat buffet", "Casual Dining", 4.0f));
+                            "All you can eat buffet", "Cafe Hybrid", 4.0f));
             mDB.insertRestaurant(
                     new Restaurant("Miku Toronto", "10 Bay St #105, Toronto, ON M5J 2R8, Canada",
                             "Aburi Restaurant’s first East Coast location is situated in Toronto’s Harbour Front at Bay and Queen’s Quay. With over 7000 square feet, a raw bar, sushi bar, and large patio, Miku brings contemporary upscale design to the Southern Financial District.",
@@ -216,6 +239,5 @@ public class RestaurantListActivity extends AppCompatActivity {
             mAdapter = new RestaurantAdapter(this, mResults);
             mRecyclerView.setAdapter(mAdapter);
         }
-
     }
 }
