@@ -153,8 +153,7 @@ public class RestaurantListActivity extends AppCompatActivity {
 
     private void goToRestaurant(Restaurant restaurant) {
         Intent intent = new Intent(RestaurantListActivity.this, RestaurantActivity.class);
-        //TODO: parse the whole model in the future (requires Parcelable for model)
-        intent.putExtra(RESTAURANT_KEY, restaurant.getId());
+        intent.putExtra(RESTAURANT_KEY, restaurant);
         startActivity(intent);
     }
 
