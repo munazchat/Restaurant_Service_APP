@@ -63,7 +63,7 @@ public class RestaurantActivity extends AppCompatActivity implements OnMapReadyC
                     Intent intent = new Intent(RestaurantActivity.this, FullscreenMapActivity.class);
                     intent.putExtra("latitude", mRestaurantLocation.latitude);
                     intent.putExtra("longitude", mRestaurantLocation.longitude);
-                    intent.putExtra("name", "Restaurant name");
+                    intent.putExtra("name", mRestaurant.getName());
                     startActivity(intent);
                 }
             }
@@ -146,10 +146,10 @@ public class RestaurantActivity extends AppCompatActivity implements OnMapReadyC
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        mRestaurantLocation = getLocationFromAddress("Jægerstræde 8, Karlslunde, Denmark");
+        mRestaurantLocation = getLocationFromAddress(mRestaurant.getAddress());
         if (mRestaurantLocation != null) {
             Marker marker = mMap.addMarker(
-                    new MarkerOptions().position(mRestaurantLocation).title("Restaurant name"));
+                    new MarkerOptions().position(mRestaurantLocation).title(mRestaurant.getName()));
             marker.showInfoWindow();
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mRestaurantLocation, 10));
         }
