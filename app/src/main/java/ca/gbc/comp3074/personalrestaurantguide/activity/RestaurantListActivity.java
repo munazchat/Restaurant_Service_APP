@@ -63,26 +63,16 @@ public class RestaurantListActivity extends AppCompatActivity {
         mRecyclerView = findViewById(R.id.recycler_view);
 
         mRestaurants.addAll(mDB.getAllRestaurants());
-        //TODO: Add check for data from intent to see if we came from search or not
 
         mAdapter = new RestaurantAdapter(this, mRestaurants);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setAdapter(mAdapter);
 
-        if (!mRestaurants.isEmpty()) {
-            mTopPickTextView.setText(getTopPick().getName());
-        }
-
         mAdapter.setOnRestaurantClickListener(new RestaurantAdapter.OnRestaurantClickListener() {
             @Override
             public void onRestaurantClicked(int position) {
                 goToRestaurant(mRestaurants.get(position));
-
-                // TODO: remove this temporary code for deletion after prototypes
-//                mDB.deleteRestaurant(mRestaurants.get(position));
-//                mRestaurants.remove(position);
-//                mAdapter.notifyDataSetChanged();
             }
         });
 
@@ -137,11 +127,19 @@ public class RestaurantListActivity extends AppCompatActivity {
         return true;
     }
 
-    private Restaurant getTopPick() {
-        mTopRestaurant = Collections.max(mRestaurants);
-        Log.d(TAG, "getTopPick: " + mTopRestaurant.getName());
-
-        return mTopRestaurant;
+    private void getTopPick() {
+        if (fromSearch) {
+            if (!mResults.isEmpty()) {
+                mTopRestaurant = Collections.max(mResults);
+            }
+        } else {
+            mTopRestaurant = Collections.max(mRestaurants);
+        }
+        if (mTopRestaurant != null) {
+            mTopPickTextView.setText(mTopRestaurant.getName());
+        } else {
+            mTopPickTextView.setText("No Restaurants matches your search");
+        }
     }
 
     public void goToTopPick(View v) {
@@ -227,16 +225,17 @@ public class RestaurantListActivity extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.action_restaurants);
         if (fromSearch) {
             Intent intent = getIntent();
-            String searchText = intent.getStringExtra("searchtext");
+            String searchText = intent.getStringExtra("searchtext").toLowerCase();
             String type = intent.getStringExtra("type");
 
             for (Restaurant r : mRestaurants) {
-                if (r.getType().equals(type) && r.getName().contains(searchText)) {
+                if (r.getType().equals(type) && r.getName().toLowerCase().contains(searchText)) {
                     mResults.add(r);
                 }
             }
             mAdapter = new RestaurantAdapter(this, mResults);
             mRecyclerView.setAdapter(mAdapter);
         }
+        getTopPick();
     }
 }

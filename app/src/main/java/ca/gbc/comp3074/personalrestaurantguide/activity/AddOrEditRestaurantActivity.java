@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -16,6 +15,7 @@ import android.widget.Toast;
 import ca.gbc.comp3074.personalrestaurantguide.R;
 import ca.gbc.comp3074.personalrestaurantguide.database.DatabaseHelper;
 import ca.gbc.comp3074.personalrestaurantguide.model.Restaurant;
+import ca.gbc.comp3074.personalrestaurantguide.util.Utilities;
 
 public class AddOrEditRestaurantActivity extends AppCompatActivity {
 
@@ -82,6 +82,8 @@ public class AddOrEditRestaurantActivity extends AppCompatActivity {
 
                     mDB.insertRestaurant(restaurant);
                     Toast.makeText(getApplicationContext(), "Restaurant was created", Toast.LENGTH_LONG).show();
+                    Utilities.hideKeyboard(AddOrEditRestaurantActivity.this);
+                    
                     // we're editing a restaurant
                 } else {
                     mRestaurant.setName(mName.getText().toString());
@@ -91,6 +93,7 @@ public class AddOrEditRestaurantActivity extends AppCompatActivity {
 
                     mDB.updateRestaurant(mRestaurant);
                     Toast.makeText(getApplicationContext(), "Restaurant was updated", Toast.LENGTH_LONG).show();
+                    Utilities.hideKeyboard(AddOrEditRestaurantActivity.this);
                 }
 
             }
