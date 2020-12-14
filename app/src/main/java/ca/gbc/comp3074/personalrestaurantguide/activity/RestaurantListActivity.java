@@ -68,15 +68,27 @@ public class RestaurantListActivity extends AppCompatActivity {
         mAdapter = new RestaurantAdapter(this, mRestaurants);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        setUpAdapter();
+    }
+
+    private void setUpAdapter() {
         mRecyclerView.setAdapter(mAdapter);
 
-        mAdapter.setOnRestaurantClickListener(new RestaurantAdapter.OnRestaurantClickListener() {
-            @Override
-            public void onRestaurantClicked(int position) {
-                goToRestaurant(mRestaurants.get(position));
-            }
-        });
-
+        if (fromSearch) {
+            mAdapter.setOnRestaurantClickListener(new RestaurantAdapter.OnRestaurantClickListener() {
+                @Override
+                public void onRestaurantClicked(int position) {
+                    goToRestaurant(mResults.get(position));
+                }
+            });
+        } else {
+            mAdapter.setOnRestaurantClickListener(new RestaurantAdapter.OnRestaurantClickListener() {
+                @Override
+                public void onRestaurantClicked(int position) {
+                    goToRestaurant(mRestaurants.get(position));
+                }
+            });
+        }
     }
 
     private void setUpBottomNav() {
@@ -97,9 +109,6 @@ public class RestaurantListActivity extends AppCompatActivity {
                     case R.id.action_admin:
                         intent = new Intent(RestaurantListActivity.this, AdminActivity.class);
                         break;
-//                    case R.id.action_about:
-//                        intent = new Intent(RestaurantListActivity.this, AboutActivity.class);
-//                        break;
                 }
                 if (intent != null) {
                     startActivity(intent);
@@ -166,12 +175,18 @@ public class RestaurantListActivity extends AppCompatActivity {
             String type = intent.getStringExtra("type");
 
             for (Restaurant r : mRestaurants) {
-                if (r.getType().equals(type) && r.getName().toLowerCase().contains(searchText)) {
-                    mResults.add(r);
+                if (type != null && type.equalsIgnoreCase("Restaurant Type")) {
+                    if (r.getName().toLowerCase().contains(searchText)) {
+                        mResults.add(r);
+                    }
+                } else {
+                    if (r.getType().equals(type) && r.getName().toLowerCase().contains(searchText)) {
+                        mResults.add(r);
+                    }
                 }
             }
             mAdapter = new RestaurantAdapter(this, mResults);
-            mRecyclerView.setAdapter(mAdapter);
+            setUpAdapter();
         }
         getTopPick();
     }
