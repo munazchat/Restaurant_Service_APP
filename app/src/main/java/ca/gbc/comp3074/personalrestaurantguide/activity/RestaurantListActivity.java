@@ -25,6 +25,7 @@ import ca.gbc.comp3074.personalrestaurantguide.R;
 import ca.gbc.comp3074.personalrestaurantguide.adapter.RestaurantAdapter;
 import ca.gbc.comp3074.personalrestaurantguide.database.DatabaseHelper;
 import ca.gbc.comp3074.personalrestaurantguide.model.Restaurant;
+import ca.gbc.comp3074.personalrestaurantguide.util.Utilities;
 
 public class RestaurantListActivity extends AppCompatActivity {
 
@@ -57,35 +58,37 @@ public class RestaurantListActivity extends AppCompatActivity {
     private void init() {
         fromSearch = getIntent().hasExtra("searchtext");
         mDB = new DatabaseHelper(this);
-        addRows();
+        Utilities.addRows(mDB);
 
         mTopPickTextView = findViewById(R.id.top_pick_value);
         mRecyclerView = findViewById(R.id.recycler_view);
 
         mRestaurants.addAll(mDB.getAllRestaurants());
-        //TODO: Add check for data from intent to see if we came from search or not
 
         mAdapter = new RestaurantAdapter(this, mRestaurants);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        setUpAdapter();
+    }
+
+    private void setUpAdapter() {
         mRecyclerView.setAdapter(mAdapter);
 
-        if (!mRestaurants.isEmpty()) {
-            mTopPickTextView.setText(getTopPick().getName());
+        if (fromSearch) {
+            mAdapter.setOnRestaurantClickListener(new RestaurantAdapter.OnRestaurantClickListener() {
+                @Override
+                public void onRestaurantClicked(int position) {
+                    goToRestaurant(mResults.get(position));
+                }
+            });
+        } else {
+            mAdapter.setOnRestaurantClickListener(new RestaurantAdapter.OnRestaurantClickListener() {
+                @Override
+                public void onRestaurantClicked(int position) {
+                    goToRestaurant(mRestaurants.get(position));
+                }
+            });
         }
-
-        mAdapter.setOnRestaurantClickListener(new RestaurantAdapter.OnRestaurantClickListener() {
-            @Override
-            public void onRestaurantClicked(int position) {
-                goToRestaurant(mRestaurants.get(position));
-
-                // TODO: remove this temporary code for deletion after prototypes
-//                mDB.deleteRestaurant(mRestaurants.get(position));
-//                mRestaurants.remove(position);
-//                mAdapter.notifyDataSetChanged();
-            }
-        });
-
     }
 
     private void setUpBottomNav() {
@@ -106,9 +109,6 @@ public class RestaurantListActivity extends AppCompatActivity {
                     case R.id.action_admin:
                         intent = new Intent(RestaurantListActivity.this, AdminActivity.class);
                         break;
-//                    case R.id.action_about:
-//                        intent = new Intent(RestaurantListActivity.this, AboutActivity.class);
-//                        break;
                 }
                 if (intent != null) {
                     startActivity(intent);
@@ -137,11 +137,21 @@ public class RestaurantListActivity extends AppCompatActivity {
         return true;
     }
 
-    private Restaurant getTopPick() {
-        mTopRestaurant = Collections.max(mRestaurants);
-        Log.d(TAG, "getTopPick: " + mTopRestaurant.getName());
-
-        return mTopRestaurant;
+    private void getTopPick() {
+        if (fromSearch) {
+            if (!mResults.isEmpty()) {
+                mTopRestaurant = Collections.max(mResults);
+            }
+        } else {
+            if (!mRestaurants.isEmpty()) {
+                mTopRestaurant = Collections.max(mRestaurants);
+            }
+        }
+        if (mTopRestaurant != null) {
+            mTopPickTextView.setText(mTopRestaurant.getName());
+        } else {
+            mTopPickTextView.setText("No Restaurants matches your search");
+        }
     }
 
     public void goToTopPick(View v) {
@@ -157,86 +167,29 @@ public class RestaurantListActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void addRows() {
-        if (mDB.getAllRestaurants().isEmpty()) {
-            mDB.insertRestaurant(
-                    new Restaurant("Craque de Creme", "1360 Bathurst St, Toronto, ON M5R 3H7, Canada",
-                            "Dessert restaurant", "Fast Food", 4.5f));
-            mDB.insertRestaurant(
-                    new Restaurant("The Cheesecake Factory", "3401 Dufferin St, North York, ON M6A 2T9, Canada",
-                            "The Cheesecake Factory story begins in Detroit, Michigan in the 1940’s. Evelyn Overton found a recipe in the local newspaper that would inspire her “Original” Cheesecake.",
-                            "Fast Food", 4.0f));
-            mDB.insertRestaurant(
-                    new Restaurant("Ilden", "Algade 62, 4000 Roskilde, Denmark",
-                            "All you can eat buffet", "Fast Food", 4.0f));
-            mDB.insertRestaurant(
-                    new Restaurant("Miku Toronto", "10 Bay St #105, Toronto, ON M5J 2R8, Canada",
-                            "Aburi Restaurant’s first East Coast location is situated in Toronto’s Harbour Front at Bay and Queen’s Quay. With over 7000 square feet, a raw bar, sushi bar, and large patio, Miku brings contemporary upscale design to the Southern Financial District.",
-                            "Fast Food", 4.6f));
-
-
-            mDB.insertRestaurant(
-                    new Restaurant("Craque de Creme", "1360 Bathurst St, Toronto, ON M5R 3H7, Canada",
-                            "Dessert restaurant", "Fast Casual", 4.5f));
-            mDB.insertRestaurant(
-                    new Restaurant("The Cheesecake Factory", "3401 Dufferin St, North York, ON M6A 2T9, Canada",
-                            "The Cheesecake Factory story begins in Detroit, Michigan in the 1940’s. Evelyn Overton found a recipe in the local newspaper that would inspire her “Original” Cheesecake.",
-                            "Fast Casual", 4.0f));
-            mDB.insertRestaurant(
-                    new Restaurant("Ilden", "Algade 62, 4000 Roskilde, Denmark",
-                            "All you can eat buffet", "Fast Casual", 4.0f));
-            mDB.insertRestaurant(
-                    new Restaurant("Miku Toronto", "10 Bay St #105, Toronto, ON M5J 2R8, Canada",
-                            "Aburi Restaurant’s first East Coast location is situated in Toronto’s Harbour Front at Bay and Queen’s Quay. With over 7000 square feet, a raw bar, sushi bar, and large patio, Miku brings contemporary upscale design to the Southern Financial District.",
-                            "Fast Casual", 4.6f));
-            mDB.insertRestaurant(
-                    new Restaurant("Craque de Creme", "1360 Bathurst St, Toronto, ON M5R 3H7, Canada",
-                            "Dessert restaurant", "Casual Dining", 4.5f));
-            mDB.insertRestaurant(
-                    new Restaurant("The Cheesecake Factory", "3401 Dufferin St, North York, ON M6A 2T9, Canada",
-                            "The Cheesecake Factory story begins in Detroit, Michigan in the 1940’s. Evelyn Overton found a recipe in the local newspaper that would inspire her “Original” Cheesecake.",
-                            "Casual Dining", 4.0f));
-            mDB.insertRestaurant(
-                    new Restaurant("Ilden", "Algade 62, 4000 Roskilde, Denmark",
-                            "All you can eat buffet", "Casual Dining", 4.0f));
-            mDB.insertRestaurant(
-                    new Restaurant("Miku Toronto", "10 Bay St #105, Toronto, ON M5J 2R8, Canada",
-                            "Aburi Restaurant’s first East Coast location is situated in Toronto’s Harbour Front at Bay and Queen’s Quay. With over 7000 square feet, a raw bar, sushi bar, and large patio, Miku brings contemporary upscale design to the Southern Financial District.",
-                            "Casual Dining", 4.6f));
-            mDB.insertRestaurant(
-                    new Restaurant("Craque de Creme", "1360 Bathurst St, Toronto, ON M5R 3H7, Canada",
-                            "Dessert restaurant", "Cafe Hybrid", 4.5f));
-            mDB.insertRestaurant(
-                    new Restaurant("The Cheesecake Factory", "3401 Dufferin St, North York, ON M6A 2T9, Canada",
-                            "The Cheesecake Factory story begins in Detroit, Michigan in the 1940’s. Evelyn Overton found a recipe in the local newspaper that would inspire her “Original” Cheesecake.",
-                            "Cafe Hybrid", 4.0f));
-            mDB.insertRestaurant(
-                    new Restaurant("Ilden", "Algade 62, 4000 Roskilde, Denmark",
-                            "All you can eat buffet", "Cafe Hybrid", 4.0f));
-            mDB.insertRestaurant(
-                    new Restaurant("Miku Toronto", "10 Bay St #105, Toronto, ON M5J 2R8, Canada",
-                            "Aburi Restaurant’s first East Coast location is situated in Toronto’s Harbour Front at Bay and Queen’s Quay. With over 7000 square feet, a raw bar, sushi bar, and large patio, Miku brings contemporary upscale design to the Southern Financial District.",
-                            "Cafe Hybrid", 4.6f));
-        }
-    }
-
-
     @Override
     protected void onResume() {
         super.onResume();
         bottomNavigationView.setSelectedItemId(R.id.action_restaurants);
         if (fromSearch) {
             Intent intent = getIntent();
-            String searchText = intent.getStringExtra("searchtext");
+            String searchText = intent.getStringExtra("searchtext").toLowerCase();
             String type = intent.getStringExtra("type");
 
             for (Restaurant r : mRestaurants) {
-                if (r.getType().equals(type) && r.getName().contains(searchText)) {
-                    mResults.add(r);
+                if (type != null && type.equalsIgnoreCase("Restaurant Type")) {
+                    if (r.getName().toLowerCase().contains(searchText)) {
+                        mResults.add(r);
+                    }
+                } else {
+                    if (r.getType().equals(type) && r.getName().toLowerCase().contains(searchText)) {
+                        mResults.add(r);
+                    }
                 }
             }
             mAdapter = new RestaurantAdapter(this, mResults);
-            mRecyclerView.setAdapter(mAdapter);
+            setUpAdapter();
         }
+        getTopPick();
     }
 }

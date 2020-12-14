@@ -43,6 +43,7 @@ public class RestaurantActivity extends AppCompatActivity implements OnMapReadyC
     private TextView mTVDescription;
     private TextView mTVName;
     private TextView mTVType;
+    private TextView mTVTelephone;
     private Restaurant mRestaurant;
     private DatabaseHelper mDB;
 
@@ -78,6 +79,7 @@ public class RestaurantActivity extends AppCompatActivity implements OnMapReadyC
         mTVDescription=findViewById(R.id.description);
         mTVName=findViewById(R.id.name);
         mTVType=findViewById(R.id.type);
+        mTVTelephone = findViewById(R.id.telephone);
 
         Button btn_s=(Button)findViewById(R.id.share);
         btn_s.setOnClickListener(new View.OnClickListener() {
@@ -85,9 +87,9 @@ public class RestaurantActivity extends AppCompatActivity implements OnMapReadyC
             public void onClick(View v) {
                 Intent myIntent = new Intent(Intent.ACTION_SEND);
                 myIntent.setType("text/plain");
-                String shareBody = "body here";
-                String shareSub = "subject";
-                myIntent.putExtra(Intent.EXTRA_SUBJECT,shareBody);
+                String shareBody = mRestaurant.toString();
+                String shareSub = "Restaurant - " + mRestaurant.getName();
+                myIntent.putExtra(Intent.EXTRA_SUBJECT,shareSub);
                 myIntent.putExtra(Intent.EXTRA_TEXT,shareBody);
                 startActivity(Intent.createChooser(myIntent,"Share using"));
             }
@@ -111,7 +113,7 @@ public class RestaurantActivity extends AppCompatActivity implements OnMapReadyC
             mTVDescription.setText(mRestaurant.getDescription());
             mTVName.setText(mRestaurant.getName());
             mTVType.setText(mRestaurant.getType());
-
+            mTVTelephone.setText(mRestaurant.getTelephone());
             ratingBar.setRating(mRestaurant.getRating());
         }
     }

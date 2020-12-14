@@ -3,6 +3,16 @@ package ca.gbc.comp3074.personalrestaurantguide.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
+
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@NoArgsConstructor
+@Getter
+@Setter
 public class Restaurant implements Comparable<Restaurant>, Parcelable {
 
     public static final String TABLE_NAME = "restaurants";
@@ -12,6 +22,7 @@ public class Restaurant implements Comparable<Restaurant>, Parcelable {
     public static final String COLUMN_ADDRESS = "address";
     public static final String COLUMN_DESCRIPTION = "description";
     public static final String COLUMN_TYPE = "type";
+    public static final String COLUMN_TELEPHONE = "telephone";
     public static final String COLUMN_RATING = "rating";
 
     public static final String CREATE_TABLE =
@@ -21,6 +32,7 @@ public class Restaurant implements Comparable<Restaurant>, Parcelable {
                     + COLUMN_ADDRESS + " TEXT, "
                     + COLUMN_DESCRIPTION + " TEXT, "
                     + COLUMN_TYPE + " TEXT, "
+                    + COLUMN_TELEPHONE + " TEXT, "
                     + COLUMN_RATING + " REAL"
                     + ")";
 
@@ -29,71 +41,18 @@ public class Restaurant implements Comparable<Restaurant>, Parcelable {
     private String address;
     private String description;
     private String type;
+    private String telephone;
     private float rating;
 
-    public Restaurant(String name, String address, String description, String type, float rating) {
-        this.name = name;
-        this.address = address;
-        this.description = description;
-        this.type = type;
-        this.rating = rating;
-    }
-
-    public Restaurant(int id, String name, String address, String description, String type, float rating) {
+    @Builder
+    public Restaurant(int id, String name, String address, String description, String type, String telephone, float rating) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.description = description;
         this.type = type;
+        this.telephone = telephone;
         this.rating = rating;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public float getRating() {
-        return rating;
-    }
-
-    public void setRating(float rating) {
-        this.rating = rating;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     @Override
@@ -112,6 +71,7 @@ public class Restaurant implements Comparable<Restaurant>, Parcelable {
         address = in.readString();
         description = in.readString();
         type = in.readString();
+        telephone = in.readString();
         rating = in.readFloat();
     }
 
@@ -127,6 +87,7 @@ public class Restaurant implements Comparable<Restaurant>, Parcelable {
         dest.writeString(address);
         dest.writeString(description);
         dest.writeString(type);
+        dest.writeString(telephone);
         dest.writeFloat(rating);
     }
 
@@ -142,4 +103,17 @@ public class Restaurant implements Comparable<Restaurant>, Parcelable {
             return new Restaurant[size];
         }
     };
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "Restaurant:\n" +
+                "Name: " + name + "\n" +
+                "Type: " + type + "\n" +
+                "Description: " + description + "\n" +
+                "Address: " + address + "\n" +
+                "Contact: " + telephone + "\n" +
+                "Rating: " + rating + "\n";
+
+    }
 }
