@@ -3,6 +3,8 @@ package ca.gbc.comp3074.personalrestaurantguide.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -101,4 +103,17 @@ public class Restaurant implements Comparable<Restaurant>, Parcelable {
             return new Restaurant[size];
         }
     };
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "Restaurant:\n" +
+                "Name: " + name + "\n" +
+                "Type: " + type + "\n" +
+                "Description: " + description + "\n" +
+                "Address: " + address + "\n" +
+                "Contact: " + telephone + "\n" +
+                "Rating: " + rating + "\n";
+
+    }
 }

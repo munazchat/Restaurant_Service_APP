@@ -87,9 +87,9 @@ public class RestaurantActivity extends AppCompatActivity implements OnMapReadyC
             public void onClick(View v) {
                 Intent myIntent = new Intent(Intent.ACTION_SEND);
                 myIntent.setType("text/plain");
-                String shareBody = "body here";
-                String shareSub = "subject";
-                myIntent.putExtra(Intent.EXTRA_SUBJECT,shareBody);
+                String shareBody = mRestaurant.toString();
+                String shareSub = "Restaurant - " + mRestaurant.getName();
+                myIntent.putExtra(Intent.EXTRA_SUBJECT,shareSub);
                 myIntent.putExtra(Intent.EXTRA_TEXT,shareBody);
                 startActivity(Intent.createChooser(myIntent,"Share using"));
             }
