@@ -25,6 +25,7 @@ import ca.gbc.comp3074.personalrestaurantguide.R;
 import ca.gbc.comp3074.personalrestaurantguide.adapter.RestaurantAdapter;
 import ca.gbc.comp3074.personalrestaurantguide.database.DatabaseHelper;
 import ca.gbc.comp3074.personalrestaurantguide.model.Restaurant;
+import ca.gbc.comp3074.personalrestaurantguide.util.Utilities;
 
 public class RestaurantListActivity extends AppCompatActivity {
 
@@ -57,7 +58,7 @@ public class RestaurantListActivity extends AppCompatActivity {
     private void init() {
         fromSearch = getIntent().hasExtra("searchtext");
         mDB = new DatabaseHelper(this);
-        addRows();
+        Utilities.addRows(mDB);
 
         mTopPickTextView = findViewById(R.id.top_pick_value);
         mRecyclerView = findViewById(R.id.recycler_view);
@@ -154,70 +155,6 @@ public class RestaurantListActivity extends AppCompatActivity {
         intent.putExtra(RESTAURANT_KEY, restaurant);
         startActivity(intent);
     }
-
-    private void addRows() {
-        if (mDB.getAllRestaurants().isEmpty()) {
-            mDB.insertRestaurant(
-                    new Restaurant("Craque de Creme", "1360 Bathurst St, Toronto, ON M5R 3H7, Canada",
-                            "Dessert restaurant", "Fast Food", 4.5f));
-            mDB.insertRestaurant(
-                    new Restaurant("The Cheesecake Factory", "3401 Dufferin St, North York, ON M6A 2T9, Canada",
-                            "The Cheesecake Factory story begins in Detroit, Michigan in the 1940’s. Evelyn Overton found a recipe in the local newspaper that would inspire her “Original” Cheesecake.",
-                            "Fast Food", 4.0f));
-            mDB.insertRestaurant(
-                    new Restaurant("Ilden", "Algade 62, 4000 Roskilde, Denmark",
-                            "All you can eat buffet", "Fast Food", 4.0f));
-            mDB.insertRestaurant(
-                    new Restaurant("Miku Toronto", "10 Bay St #105, Toronto, ON M5J 2R8, Canada",
-                            "Aburi Restaurant’s first East Coast location is situated in Toronto’s Harbour Front at Bay and Queen’s Quay. With over 7000 square feet, a raw bar, sushi bar, and large patio, Miku brings contemporary upscale design to the Southern Financial District.",
-                            "Fast Food", 4.6f));
-
-
-            mDB.insertRestaurant(
-                    new Restaurant("Craque de Creme", "1360 Bathurst St, Toronto, ON M5R 3H7, Canada",
-                            "Dessert restaurant", "Fast Casual", 4.5f));
-            mDB.insertRestaurant(
-                    new Restaurant("The Cheesecake Factory", "3401 Dufferin St, North York, ON M6A 2T9, Canada",
-                            "The Cheesecake Factory story begins in Detroit, Michigan in the 1940’s. Evelyn Overton found a recipe in the local newspaper that would inspire her “Original” Cheesecake.",
-                            "Fast Casual", 4.0f));
-            mDB.insertRestaurant(
-                    new Restaurant("Ilden", "Algade 62, 4000 Roskilde, Denmark",
-                            "All you can eat buffet", "Fast Casual", 4.0f));
-            mDB.insertRestaurant(
-                    new Restaurant("Miku Toronto", "10 Bay St #105, Toronto, ON M5J 2R8, Canada",
-                            "Aburi Restaurant’s first East Coast location is situated in Toronto’s Harbour Front at Bay and Queen’s Quay. With over 7000 square feet, a raw bar, sushi bar, and large patio, Miku brings contemporary upscale design to the Southern Financial District.",
-                            "Fast Casual", 4.6f));
-            mDB.insertRestaurant(
-                    new Restaurant("Craque de Creme", "1360 Bathurst St, Toronto, ON M5R 3H7, Canada",
-                            "Dessert restaurant", "Casual Dining", 4.5f));
-            mDB.insertRestaurant(
-                    new Restaurant("The Cheesecake Factory", "3401 Dufferin St, North York, ON M6A 2T9, Canada",
-                            "The Cheesecake Factory story begins in Detroit, Michigan in the 1940’s. Evelyn Overton found a recipe in the local newspaper that would inspire her “Original” Cheesecake.",
-                            "Casual Dining", 4.0f));
-            mDB.insertRestaurant(
-                    new Restaurant("Ilden", "Algade 62, 4000 Roskilde, Denmark",
-                            "All you can eat buffet", "Casual Dining", 4.0f));
-            mDB.insertRestaurant(
-                    new Restaurant("Miku Toronto", "10 Bay St #105, Toronto, ON M5J 2R8, Canada",
-                            "Aburi Restaurant’s first East Coast location is situated in Toronto’s Harbour Front at Bay and Queen’s Quay. With over 7000 square feet, a raw bar, sushi bar, and large patio, Miku brings contemporary upscale design to the Southern Financial District.",
-                            "Casual Dining", 4.6f));
-            mDB.insertRestaurant(
-                    new Restaurant("Craque de Creme", "1360 Bathurst St, Toronto, ON M5R 3H7, Canada",
-                            "Dessert restaurant", "Cafe Hybrid", 4.5f));
-            mDB.insertRestaurant(
-                    new Restaurant("The Cheesecake Factory", "3401 Dufferin St, North York, ON M6A 2T9, Canada",
-                            "The Cheesecake Factory story begins in Detroit, Michigan in the 1940’s. Evelyn Overton found a recipe in the local newspaper that would inspire her “Original” Cheesecake.",
-                            "Cafe Hybrid", 4.0f));
-            mDB.insertRestaurant(
-                    new Restaurant("Ilden", "Algade 62, 4000 Roskilde, Denmark",
-                            "All you can eat buffet", "Cafe Hybrid", 4.0f));
-            mDB.insertRestaurant(
-                    new Restaurant("Miku Toronto", "10 Bay St #105, Toronto, ON M5J 2R8, Canada",
-                            "Aburi Restaurant’s first East Coast location is situated in Toronto’s Harbour Front at Bay and Queen’s Quay. With over 7000 square feet, a raw bar, sushi bar, and large patio, Miku brings contemporary upscale design to the Southern Financial District.",
-                            "Cafe Hybrid", 4.6f));
-        }
-    }
-
 
     @Override
     protected void onResume() {

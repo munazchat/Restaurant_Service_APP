@@ -3,6 +3,14 @@ package ca.gbc.comp3074.personalrestaurantguide.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@NoArgsConstructor
+@Getter
+@Setter
 public class Restaurant implements Comparable<Restaurant>, Parcelable {
 
     public static final String TABLE_NAME = "restaurants";
@@ -31,14 +39,7 @@ public class Restaurant implements Comparable<Restaurant>, Parcelable {
     private String type;
     private float rating;
 
-    public Restaurant(String name, String address, String description, String type, float rating) {
-        this.name = name;
-        this.address = address;
-        this.description = description;
-        this.type = type;
-        this.rating = rating;
-    }
-
+    @Builder
     public Restaurant(int id, String name, String address, String description, String type, float rating) {
         this.id = id;
         this.name = name;
@@ -46,54 +47,6 @@ public class Restaurant implements Comparable<Restaurant>, Parcelable {
         this.description = description;
         this.type = type;
         this.rating = rating;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public float getRating() {
-        return rating;
-    }
-
-    public void setRating(float rating) {
-        this.rating = rating;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     @Override

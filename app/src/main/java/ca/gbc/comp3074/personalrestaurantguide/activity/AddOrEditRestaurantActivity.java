@@ -73,12 +73,12 @@ public class AddOrEditRestaurantActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // We are adding a new restaurant
                 if (mRestaurant == null) {
-                    Restaurant restaurant = new Restaurant(
-                            mName.getText().toString(),
-                            mAddress.getText().toString(),
-                            mDescription.getText().toString(),
-                            mType.getSelectedItem().toString(),
-                            0.0f);
+                    Restaurant restaurant = Restaurant.builder()
+                            .name(mName.getText().toString())
+                            .address(mAddress.getText().toString())
+                            .description(mDescription.getText().toString())
+                            .type(mType.getSelectedItem().toString())
+                            .rating(0.0f).build();
 
                     mDB.insertRestaurant(restaurant);
                     Toast.makeText(getApplicationContext(), "Restaurant was created", Toast.LENGTH_LONG).show();
