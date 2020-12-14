@@ -24,6 +24,7 @@ public class AddOrEditRestaurantActivity extends AppCompatActivity {
     private TextView mTitle;
     private EditText mName;
     private EditText mAddress;
+    private EditText mTelephone;
     private EditText mDescription;
     private Spinner mType;
     private Button mBtnSubmit;
@@ -49,6 +50,7 @@ public class AddOrEditRestaurantActivity extends AppCompatActivity {
         mTitle = findViewById(R.id.tv_title);
         mName = findViewById(R.id.et_restaurant_name);
         mAddress = findViewById(R.id.et_restaurant_address);
+        mTelephone = findViewById(R.id.et_restaurant_telephone);
         mDescription = findViewById(R.id.et_restaurant_description);
         mType = findViewById(R.id.spinner);
         mBtnSubmit = findViewById(R.id.btn_submit);
@@ -64,6 +66,7 @@ public class AddOrEditRestaurantActivity extends AppCompatActivity {
             mTitle.setText("Edit Restaurant");
             mName.setText(mRestaurant.getName());
             mAddress.setText(mRestaurant.getAddress());
+            mTelephone.setText(mRestaurant.getTelephone());
             mDescription.setText(mRestaurant.getDescription());
             mType.setSelection(myAdapter.getPosition(mRestaurant.getType()));
         }
@@ -76,6 +79,7 @@ public class AddOrEditRestaurantActivity extends AppCompatActivity {
                     Restaurant restaurant = Restaurant.builder()
                             .name(mName.getText().toString())
                             .address(mAddress.getText().toString())
+                            .telephone(mTelephone.getText().toString())
                             .description(mDescription.getText().toString())
                             .type(mType.getSelectedItem().toString())
                             .rating(0.0f).build();
@@ -88,6 +92,7 @@ public class AddOrEditRestaurantActivity extends AppCompatActivity {
                 } else {
                     mRestaurant.setName(mName.getText().toString());
                     mRestaurant.setAddress(mAddress.getText().toString());
+                    mRestaurant.setTelephone(mTelephone.getText().toString());
                     mRestaurant.setDescription(mDescription.getText().toString());
                     mRestaurant.setType(mType.getSelectedItem().toString());
 

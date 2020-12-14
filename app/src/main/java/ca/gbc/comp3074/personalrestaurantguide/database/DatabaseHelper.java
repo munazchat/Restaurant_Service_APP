@@ -40,6 +40,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(Restaurant.COLUMN_DESCRIPTION, restaurant.getDescription());
         values.put(Restaurant.COLUMN_RATING, restaurant.getRating());
         values.put(Restaurant.COLUMN_TYPE, restaurant.getType());
+        values.put(Restaurant.COLUMN_TELEPHONE, restaurant.getTelephone());
 
         long id = db.insert(Restaurant.TABLE_NAME, null, values);
         db.close();
@@ -56,6 +57,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(Restaurant.COLUMN_DESCRIPTION, restaurant.getDescription());
         values.put(Restaurant.COLUMN_RATING, restaurant.getRating());
         values.put(Restaurant.COLUMN_TYPE, restaurant.getType());
+        values.put(Restaurant.COLUMN_TELEPHONE, restaurant.getTelephone());
 
         int count = db.update(Restaurant.TABLE_NAME, values, Restaurant.COLUMN_ID + "=?",
                 new String[]{String.valueOf(restaurant.getId())});
@@ -75,6 +77,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         Restaurant.COLUMN_ADDRESS,
                         Restaurant.COLUMN_DESCRIPTION,
                         Restaurant.COLUMN_TYPE,
+                        Restaurant.COLUMN_TELEPHONE,
                         Restaurant.COLUMN_RATING
                 },
                 Restaurant.COLUMN_ID + "=?",
@@ -83,14 +86,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         );
 
         if (cursor != null && cursor.moveToFirst()) {
-            restaurant = new Restaurant(
-                    cursor.getInt(cursor.getColumnIndex(Restaurant.COLUMN_ID)),
-                    cursor.getString(cursor.getColumnIndex(Restaurant.COLUMN_NAME)),
-                    cursor.getString(cursor.getColumnIndex(Restaurant.COLUMN_ADDRESS)),
-                    cursor.getString(cursor.getColumnIndex(Restaurant.COLUMN_DESCRIPTION)),
-                    cursor.getString(cursor.getColumnIndex(Restaurant.COLUMN_TYPE)),
-                    cursor.getFloat(cursor.getColumnIndex(Restaurant.COLUMN_RATING))
-            );
+            restaurant = Restaurant.builder()
+                    .id(cursor.getInt(cursor.getColumnIndex(Restaurant.COLUMN_ID)))
+                    .name(cursor.getString(cursor.getColumnIndex(Restaurant.COLUMN_NAME)))
+                    .address(cursor.getString(cursor.getColumnIndex(Restaurant.COLUMN_ADDRESS)))
+                    .description(cursor.getString(cursor.getColumnIndex(Restaurant.COLUMN_DESCRIPTION)))
+                    .type(cursor.getString(cursor.getColumnIndex(Restaurant.COLUMN_TYPE)))
+                    .telephone(cursor.getString(cursor.getColumnIndex(Restaurant.COLUMN_TELEPHONE)))
+                    .rating(cursor.getFloat(cursor.getColumnIndex(Restaurant.COLUMN_RATING)))
+                    .build();
             cursor.close();
         }
 
@@ -110,14 +114,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         if (cursor != null && cursor.moveToFirst()) {
             do {
-                Restaurant item = new Restaurant(
-                        cursor.getInt(cursor.getColumnIndex(Restaurant.COLUMN_ID)),
-                        cursor.getString(cursor.getColumnIndex(Restaurant.COLUMN_NAME)),
-                        cursor.getString(cursor.getColumnIndex(Restaurant.COLUMN_ADDRESS)),
-                        cursor.getString(cursor.getColumnIndex(Restaurant.COLUMN_DESCRIPTION)),
-                        cursor.getString(cursor.getColumnIndex(Restaurant.COLUMN_TYPE)),
-                        cursor.getFloat(cursor.getColumnIndex(Restaurant.COLUMN_RATING))
-                );
+                Restaurant item = Restaurant.builder()
+                        .id(cursor.getInt(cursor.getColumnIndex(Restaurant.COLUMN_ID)))
+                        .name(cursor.getString(cursor.getColumnIndex(Restaurant.COLUMN_NAME)))
+                        .address(cursor.getString(cursor.getColumnIndex(Restaurant.COLUMN_ADDRESS)))
+                        .description(cursor.getString(cursor.getColumnIndex(Restaurant.COLUMN_DESCRIPTION)))
+                        .type(cursor.getString(cursor.getColumnIndex(Restaurant.COLUMN_TYPE)))
+                        .telephone(cursor.getString(cursor.getColumnIndex(Restaurant.COLUMN_TELEPHONE)))
+                        .rating(cursor.getFloat(cursor.getColumnIndex(Restaurant.COLUMN_RATING)))
+                        .build();
                 list.add(item);
             } while (cursor.moveToNext());
             cursor.close();

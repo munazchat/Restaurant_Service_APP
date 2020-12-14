@@ -29,6 +29,7 @@ public class Utilities {
                     .address("1360 Bathurst St, Toronto, ON M5R 3H7, Canada")
                     .description("Dessert restaurant")
                     .type("Fast Food")
+                    .telephone("123-456-7890")
                     .rating(4.5f)
                     .build());
             db.insertRestaurant(Restaurant.builder()
@@ -37,6 +38,7 @@ public class Utilities {
                     .description("The Cheesecake Factory story begins in Detroit, Michigan in the 1940’s. " +
                             "Evelyn Overton found a recipe in the local newspaper that would inspire her “Original” Cheesecake.")
                     .type("Fast Food")
+                    .telephone("123-456-7890")
                     .rating(4.0f)
                     .build());
             db.insertRestaurant(Restaurant.builder()
@@ -44,6 +46,7 @@ public class Utilities {
                     .address("Algade 62, 4000 Roskilde, Denmark")
                     .description("All you can eat buffet")
                     .type("Fast Food")
+                    .telephone("123-456-7890")
                     .rating(4.0f)
                     .build());
             db.insertRestaurant(Restaurant.builder()
@@ -52,6 +55,7 @@ public class Utilities {
                     .description("Aburi Restaurant’s first East Coast location is situated in Toronto’s Harbour Front at Bay and Queen’s Quay. " +
                             "With over 7000 square feet, a raw bar, sushi bar, and large patio, Miku brings contemporary upscale design to the Southern Financial District.")
                     .type("Fast Food")
+                    .telephone("123-456-7890")
                     .rating(4.6f)
                     .build());
 
@@ -60,6 +64,7 @@ public class Utilities {
                     .address("1360 Bathurst St, Toronto, ON M5R 3H7, Canada")
                     .description("Dessert restaurant")
                     .type("Fast Casual")
+                    .telephone("123-456-7890")
                     .rating(4.5f)
                     .build());
             db.insertRestaurant(Restaurant.builder()
@@ -68,6 +73,7 @@ public class Utilities {
                     .description("The Cheesecake Factory story begins in Detroit, Michigan in the 1940’s. " +
                             "Evelyn Overton found a recipe in the local newspaper that would inspire her “Original” Cheesecake.")
                     .type("Fast Casual")
+                    .telephone("123-456-7890")
                     .rating(4.0f)
                     .build());
             db.insertRestaurant(Restaurant.builder()
@@ -75,6 +81,7 @@ public class Utilities {
                     .address("Algade 62, 4000 Roskilde, Denmark")
                     .description("All you can eat buffet")
                     .type("Fast Casual")
+                    .telephone("123-456-7890")
                     .rating(4.0f)
                     .build());
             db.insertRestaurant(Restaurant.builder()
@@ -83,6 +90,7 @@ public class Utilities {
                     .description("Aburi Restaurant’s first East Coast location is situated in Toronto’s Harbour Front at Bay and Queen’s Quay. " +
                             "With over 7000 square feet, a raw bar, sushi bar, and large patio, Miku brings contemporary upscale design to the Southern Financial District.")
                     .type("Fast Casual")
+                    .telephone("123-456-7890")
                     .rating(4.6f)
                     .build());
 
@@ -91,6 +99,7 @@ public class Utilities {
                     .address("1360 Bathurst St, Toronto, ON M5R 3H7, Canada")
                     .description("Dessert restaurant")
                     .type("Casual Dining")
+                    .telephone("123-456-7890")
                     .rating(4.5f)
                     .build());
             db.insertRestaurant(Restaurant.builder()
@@ -99,6 +108,7 @@ public class Utilities {
                     .description("The Cheesecake Factory story begins in Detroit, Michigan in the 1940’s. " +
                             "Evelyn Overton found a recipe in the local newspaper that would inspire her “Original” Cheesecake.")
                     .type("Casual Dining")
+                    .telephone("123-456-7890")
                     .rating(4.0f)
                     .build());
             db.insertRestaurant(Restaurant.builder()
@@ -106,6 +116,7 @@ public class Utilities {
                     .address("Algade 62, 4000 Roskilde, Denmark")
                     .description("All you can eat buffet")
                     .type("Casual Dining")
+                    .telephone("123-456-7890")
                     .rating(4.0f)
                     .build());
             db.insertRestaurant(Restaurant.builder()
@@ -114,6 +125,7 @@ public class Utilities {
                     .description("Aburi Restaurant’s first East Coast location is situated in Toronto’s Harbour Front at Bay and Queen’s Quay. " +
                             "With over 7000 square feet, a raw bar, sushi bar, and large patio, Miku brings contemporary upscale design to the Southern Financial District.")
                     .type("Casual Dining")
+                    .telephone("123-456-7890")
                     .rating(4.6f)
                     .build());
 
@@ -122,6 +134,7 @@ public class Utilities {
                     .address("1360 Bathurst St, Toronto, ON M5R 3H7, Canada")
                     .description("Dessert restaurant")
                     .type("Cafe Hybrid")
+                    .telephone("123-456-7890")
                     .rating(4.5f)
                     .build());
             db.insertRestaurant(Restaurant.builder()
@@ -130,6 +143,7 @@ public class Utilities {
                     .description("The Cheesecake Factory story begins in Detroit, Michigan in the 1940’s. " +
                             "Evelyn Overton found a recipe in the local newspaper that would inspire her “Original” Cheesecake.")
                     .type("Cafe Hybrid")
+                    .telephone("123-456-7890")
                     .rating(4.0f)
                     .build());
             db.insertRestaurant(Restaurant.builder()
@@ -137,6 +151,7 @@ public class Utilities {
                     .address("Algade 62, 4000 Roskilde, Denmark")
                     .description("All you can eat buffet")
                     .type("Cafe Hybrid")
+                    .telephone("123-456-7890")
                     .rating(4.0f)
                     .build());
             db.insertRestaurant(Restaurant.builder()
@@ -145,6 +160,7 @@ public class Utilities {
                     .description("Aburi Restaurant’s first East Coast location is situated in Toronto’s Harbour Front at Bay and Queen’s Quay. " +
                             "With over 7000 square feet, a raw bar, sushi bar, and large patio, Miku brings contemporary upscale design to the Southern Financial District.")
                     .type("Cafe Hybrid")
+                    .telephone("123-456-7890")
                     .rating(4.6f)
                     .build());
         }

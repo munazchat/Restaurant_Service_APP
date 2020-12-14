@@ -143,7 +143,9 @@ public class RestaurantListActivity extends AppCompatActivity {
                 mTopRestaurant = Collections.max(mResults);
             }
         } else {
-            mTopRestaurant = Collections.max(mRestaurants);
+            if (!mRestaurants.isEmpty()) {
+                mTopRestaurant = Collections.max(mRestaurants);
+            }
         }
         if (mTopRestaurant != null) {
             mTopPickTextView.setText(mTopRestaurant.getName());

@@ -20,6 +20,7 @@ public class Restaurant implements Comparable<Restaurant>, Parcelable {
     public static final String COLUMN_ADDRESS = "address";
     public static final String COLUMN_DESCRIPTION = "description";
     public static final String COLUMN_TYPE = "type";
+    public static final String COLUMN_TELEPHONE = "telephone";
     public static final String COLUMN_RATING = "rating";
 
     public static final String CREATE_TABLE =
@@ -29,6 +30,7 @@ public class Restaurant implements Comparable<Restaurant>, Parcelable {
                     + COLUMN_ADDRESS + " TEXT, "
                     + COLUMN_DESCRIPTION + " TEXT, "
                     + COLUMN_TYPE + " TEXT, "
+                    + COLUMN_TELEPHONE + " TEXT, "
                     + COLUMN_RATING + " REAL"
                     + ")";
 
@@ -37,15 +39,17 @@ public class Restaurant implements Comparable<Restaurant>, Parcelable {
     private String address;
     private String description;
     private String type;
+    private String telephone;
     private float rating;
 
     @Builder
-    public Restaurant(int id, String name, String address, String description, String type, float rating) {
+    public Restaurant(int id, String name, String address, String description, String type, String telephone, float rating) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.description = description;
         this.type = type;
+        this.telephone = telephone;
         this.rating = rating;
     }
 
@@ -65,6 +69,7 @@ public class Restaurant implements Comparable<Restaurant>, Parcelable {
         address = in.readString();
         description = in.readString();
         type = in.readString();
+        telephone = in.readString();
         rating = in.readFloat();
     }
 
@@ -80,6 +85,7 @@ public class Restaurant implements Comparable<Restaurant>, Parcelable {
         dest.writeString(address);
         dest.writeString(description);
         dest.writeString(type);
+        dest.writeString(telephone);
         dest.writeFloat(rating);
     }
 
